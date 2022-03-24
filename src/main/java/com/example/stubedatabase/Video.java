@@ -44,27 +44,14 @@ public class Video {
     }
 
     private void checkUrl(String url) throws Exception {
-        if (!(url.matches("^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]"))) {
-            throw new Exception();
-        }
+        if (url.trim().equals("")) throw new Exception("La url no pot estar buida");
+        if (!url.trim().contains("www.")) throw new Exception("La url no és vàlida, ha de contenir www.");
     }
-
-//        {
-//         if (url.trim().equals("")) throw new Exception("La url no pot estar buida");
-//         if (!url.trim().contains("www.")) throw new Exception("La url no és vàlida, ha de contenir www.");
-//        }
-
 
     private void checkTitle(String title) throws Exception {
-        if (!(title.matches("^.{10,50}$")))
-            throw new Exception();
+        if (title.trim().equals("")) throw new Exception("El títol no pot estar en blanc");
+        if (title.trim().length() < 10) throw new Exception("El títol ha de tenir mínim 10 caràcters");
     }
-
-//        {
-//        if (title.trim().equals("")) throw new Exception("El títol no pot estar en blanc");
-//        if (title.trim().length() < 10) throw new Exception("El títol ha de tenir mínim 10 caràcters");
-//        }
-
 
     public String getId() {
         return id;

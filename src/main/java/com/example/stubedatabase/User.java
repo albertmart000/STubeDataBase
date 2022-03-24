@@ -34,17 +34,18 @@ public class User {
     }
 
     private void checkPassword(String password) throws Exception {
-        if (!(password.matches("^(?=.*[0-9])(?=\\S+$).{7,25}$")))
-            throw new Exception();
+        if (!password.trim().matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{7,}$"))
+            throw new Exception("La contrassenya ha de tenir mínim 7 caràcters, mínim un número i mínim una lletra");
     }
 
     private void checkEmail(String email) throws Exception {
-        if (!(email.matches("^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")))
-            throw new Exception();
+        if (!email.trim().matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$"))
+            throw new Exception("El correu electrònic té caràcters no acceptats");
     }
 
     private void checkName(String name) throws Exception {
-        if (name.equals("")) throw new Exception();
+        if (!name.trim().matches("^[A-Za-z0-9]{5,20}$"))
+            throw new Exception("El nom d'usuari ha de tenir entre 5 i 20 caràcters i ha d'estar format per caràcters alfanumèrics");
     }
 
     public String getId() { return id; }
@@ -61,6 +62,7 @@ public class User {
         return password;
     }
 
+    public List<Video> getVideoList() { return videoList; }
 
     public void setName(String name) throws Exception {
         checkName(name);
@@ -77,8 +79,10 @@ public class User {
         this.password = password;
     }
 
-    public void addVideo(Video video) {
-        videoList.add(video);
+    public Video addVideo(Video video) {
+        video.setUser(this);
+        this.videoList.add(video);
+        return video;
     }
 
     public void removeAllVideos() {
